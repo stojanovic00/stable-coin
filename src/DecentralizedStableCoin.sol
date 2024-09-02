@@ -36,7 +36,7 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
  * Relative stability: Pegged to USD
  *
  * This is contract meant to be govnerned by DSCEngine. This contract is just ERC20 implementation
- *  of out stable coin system 
+ *  of out stable coin system
  *
  *
  */
@@ -45,7 +45,8 @@ contract DecentralizedStableCoin is ERC20Burnable, Ownable {
     error DecentralizedStableCoin__BurnAmountExceedsBalance();
     error DecentralizedStableCoin__NotZeroAddress();
 
-    constructor() ERC20("DecentralizedStableCoin", "DSC") {}
+    //Ownership is transfered to the DSCEngine contract at the time of its initialization
+    constructor() ERC20("DecentralizedStableCoin", "DSC") Ownable(address(0)) {}
 
     function burn(uint256 _amount) public override onlyOwner {
         uint256 balance = balanceOf(msg.sender);
