@@ -46,7 +46,7 @@ contract DecentralizedStableCoin is ERC20Burnable, Ownable {
     error DecentralizedStableCoin__NotZeroAddress();
 
     //Ownership is transfered to the DSCEngine contract at the time of its initialization
-    constructor() ERC20("DecentralizedStableCoin", "DSC") Ownable(address(0)) {}
+    constructor() ERC20("DecentralizedStableCoin", "DSC") Ownable(msg.sender) {}
 
     function burn(uint256 _amount) public override onlyOwner {
         uint256 balance = balanceOf(msg.sender);
@@ -55,7 +55,7 @@ contract DecentralizedStableCoin is ERC20Burnable, Ownable {
             revert DecentralizedStableCoin__MustBeMoreThanZero();
         }
 
-        if (balance <= _amount) {
+        if (balance < _amount) {
             revert DecentralizedStableCoin__BurnAmountExceedsBalance();
         }
 
